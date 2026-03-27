@@ -1,65 +1,85 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Background from "@/components/Background";
+import Features from "@/components/Features";
+import FAQ from "@/components/FAQ";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen text-white relative font-sans">
+      <Background />
+      <Navbar />
+
+      {/* SPLIT SECTION */}
+      <section className="grid md:grid-cols-2 min-h-[85vh]">
+        {/* BUYERS */}
+        <motion.div
+          initial={{ opacity: 0, x: -80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col justify-center items-center text-center px-8 py-20 hover:bg-white/5 transition"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Find Stock to Resell
+          </h2>
+
+          <p className="text-gray-400 mt-4 max-w-md">
+            Browse verified suppliers and discover products you can resell for
+            profit — no login required.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+          <motion.a whileHover={{ scale: 1.05 }} href="/browse">
+            <button className="mt-8 px-10 py-3 bg-green-500 hover:bg-green-600 rounded-xl font-semibold shadow-lg shadow-green-500/20">
+              Browse Products
+            </button>
+          </motion.a>
+
+          <p className="text-xs text-gray-500 mt-3">
+            Instant access • No registration required
+          </p>
+        </motion.div>
+
+        {/* SUPPLIERS */}
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col justify-center items-center text-center px-8 py-20 bg-white/5 backdrop-blur-md hover:bg-white/10 transition"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold">Sell Your Stock</h2>
+
+          <p className="text-gray-400 mt-4 max-w-md">
+            List your products, get buyers, and grow your business with monthly
+            subscriptions.
+          </p>
+
+          <motion.a whileHover={{ scale: 1.05 }} href="/auth">
+            <button className="mt-8 px-10 py-3 border border-green-400 text-green-400 hover:bg-green-500 hover:text-white rounded-xl font-semibold shadow-lg shadow-green-500/10">
+              Start Selling
+            </button>
+          </motion.a>
+
+          <p className="text-xs text-gray-500 mt-3">Subscription required</p>
+        </motion.div>
+      </section>
+
+      {/* FEATURES */}
+      <section id="features">
+        <Features />
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing">{/* pricing component */}</section>
+
+      {/* FAQ */}
+      <section id="faq">
+        <FAQ />
+      </section>
+
+      <Footer />
+    </main>
   );
 }
