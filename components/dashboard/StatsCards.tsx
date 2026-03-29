@@ -11,7 +11,7 @@ const stats = [
 
 export default function StatsCards() {
   return (
-    <div className="grid gap-6 md:grid-cols-4">
+    <div className="grid gap-6 grid-cols-2 md:grid-cols-6">
       {stats.map((item, i) => (
         <motion.div
           key={i}

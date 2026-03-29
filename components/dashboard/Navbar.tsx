@@ -8,7 +8,7 @@ type NavbarProps = {
 
 export default function Navbar({ setOpen }: NavbarProps) {
   return (
-    <header className="flex items-center justify-between px-4 py-4 border-b border-gray-800 bg-black text-white">
+    <header className=" fixed flex w-full items-center justify-between px-4 py-4 border-b border-gray-800 bg-black text-white">
       {/* LEFT */}
       <div className="flex items-center gap-3">
         <button
