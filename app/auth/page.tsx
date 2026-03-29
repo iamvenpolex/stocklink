@@ -8,7 +8,7 @@ export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black text-white px-6 relative overflow-hidden">
+    <main className="min-h-screen flex items-center justify-center bg-black text-white px-4 relative overflow-hidden">
       {/* background glow */}
       <div className="absolute inset-0">
         <div className="absolute w-[500px] h-[500px] bg-green-500/20 blur-[160px] rounded-full top-[-120px] left-[-120px]" />
@@ -113,7 +113,8 @@ export default function AuthPage() {
 
         {/* Footer */}
         <p className="text-xs text-gray-500 text-center mt-6">
-          By continuing, you agree to StockLINK terms
+          By continuing, you agree to <span className="font-bold">Stock</span>
+          <span className="text-green-400 font-bold">LINK</span> terms
         </p>
       </motion.div>
     </main>
