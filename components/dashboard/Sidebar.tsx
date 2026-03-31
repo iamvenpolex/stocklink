@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import {
   Home,
-  Store,
   LayoutDashboard,
   Package,
   ShoppingCart,
@@ -24,6 +26,8 @@ type SidebarProps = {
 };
 
 export default function Sidebar({ open, setOpen }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <>
       {/* Overlay */}
@@ -43,7 +47,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        {/* Header (fixed) */}
+        {/* Header */}
         <div className="p-5 border-b border-gray-800 shrink-0">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold">
@@ -56,25 +60,100 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
           </div>
         </div>
 
-        {/* NAV (scrollable area) */}
+        {/* NAV */}
         <nav className="p-4 space-y-1 text-gray-300 text-sm overflow-y-auto flex-1">
-          <NavItem icon={<Home size={18} />} label="Home" />
-          <NavItem icon={<Search size={18} />} label="Marketplace" />
+          <NavItem
+            href="/"
+            icon={<Home size={18} />}
+            label="Home"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/marketplace"
+            icon={<Search size={18} />}
+            label="Marketplace"
+            pathname={pathname}
+          />
 
           <div className="my-3 border-t border-gray-800" />
 
-          <NavItem icon={<LayoutDashboard size={18} />} label="Overview" />
-          <NavItem icon={<Package size={18} />} label="Products" />
-          <NavItem icon={<ShoppingCart size={18} />} label="Orders" />
-          <NavItem icon={<Grid size={18} />} label="Categories" />
-          <NavItem icon={<BarChart3 size={18} />} label="Analytics" />
-          <NavItem icon={<TrendingUp size={18} />} label="Revenue" />
-          <NavItem icon={<Store size={18} />} label="Marketplace" />
-          <NavItem icon={<Megaphone size={18} />} label="Promote" />
-          <NavItem icon={<Star size={18} />} label="Reviews" />
-          <NavItem icon={<Bell size={18} />} label="Notifications" />
-          <NavItem icon={<Settings size={18} />} label="Settings" />
-          <NavItem icon={<CreditCard size={18} />} label="Billing" />
+          <NavItem
+            href="/dashboard"
+            icon={<LayoutDashboard size={18} />}
+            label="Overview"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/products"
+            icon={<Package size={18} />}
+            label="Products"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/orders"
+            icon={<ShoppingCart size={18} />}
+            label="Orders"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/categories"
+            icon={<Grid size={18} />}
+            label="Categories"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/analytics"
+            icon={<BarChart3 size={18} />}
+            label="Analytics"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/revenue"
+            icon={<TrendingUp size={18} />}
+            label="Revenue"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/promote"
+            icon={<Megaphone size={18} />}
+            label="Promote"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/reviews"
+            icon={<Star size={18} />}
+            label="Reviews"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/notifications"
+            icon={<Bell size={18} />}
+            label="Notifications"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/settings"
+            icon={<Settings size={18} />}
+            label="Settings"
+            pathname={pathname}
+          />
+
+          <NavItem
+            href="/dashboard/billing"
+            icon={<CreditCard size={18} />}
+            label="Billing"
+            pathname={pathname}
+          />
         </nav>
       </aside>
     </>
@@ -84,13 +163,23 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
 type NavItemProps = {
   icon: React.ReactNode;
   label: string;
+  href: string;
+  pathname: string;
 };
 
-function NavItem({ icon, label }: NavItemProps) {
+function NavItem({ icon, label, href, pathname }: NavItemProps) {
+  const active = pathname === href;
+
   return (
-    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5">
+    <Link
+      href={href}
+      className={`
+        w-full flex items-center gap-3 px-3 py-2 rounded-lg transition
+        ${active ? "bg-green-500 text-white" : "hover:bg-white/5"}
+      `}
+    >
       {icon}
       <span>{label}</span>
-    </button>
+    </Link>
   );
 }

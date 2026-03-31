@@ -24,7 +24,7 @@ export default function Dashboard() {
       <Navbar setOpen={setSidebarOpen} />
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="pt-20 p-3 space-y-6">
+      <div className="pt-8 p-3 space-y-6">
         {loading ? (
           <DashboardSkeleton />
         ) : (

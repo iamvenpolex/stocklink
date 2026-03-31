@@ -1,10 +1,14 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function FloatingAddButton() {
+  const router = useRouter();
+
   return (
     <button
+      onClick={() => router.push("/dashboard/products/new")}
       className="
         fixed bottom-6 left-6 
         w-14 h-14 
