@@ -24,8 +24,6 @@ export default function ProductsPage() {
     <main className="p-3 space-y-6 text-white">
       {/* HEADER */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Products</h1>
-
         <Link
           href="/dashboard/products/new"
           className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg"
