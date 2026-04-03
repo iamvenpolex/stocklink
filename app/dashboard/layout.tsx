@@ -22,7 +22,7 @@ export default function DashboardLayout({
         <Navbar setOpen={setSidebarOpen} />
 
         {/* Content (push down because navbar is fixed) */}
-        <div className="pt-20 p-6">{children}</div>
+        <div className="pt-20 p-1">{children}</div>
       </div>
     </div>
   );
