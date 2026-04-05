@@ -11,8 +11,8 @@ export default function AuthPage() {
     <main className="min-h-screen flex items-center justify-center bg-black text-white px-4 relative overflow-hidden">
       {/* background glow */}
       <div className="absolute inset-0">
-        <div className="absolute w-[500px] h-[500px] bg-green-500/20 blur-[160px] rounded-full top-[-120px] left-[-120px]" />
-        <div className="absolute w-[500px] h-[500px] bg-blue-500/20 blur-[160px] rounded-full bottom-[-120px] right-[-120px]" />
+        <div className="absolute w-125 h-125 bg-green-500/20 blur-[160px] rounded-full -top-30 -left-30" />
+        <div className="absolute w-125 h-125 bg-blue-500/20 blur-[160px] rounded-full -bottom-30 -right-30" />
       </div>
 
       {/* Card */}

@@ -8,7 +8,6 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Grid,
   BarChart3,
   TrendingUp,
   Megaphone,
@@ -96,13 +95,6 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
             href="/dashboard/orders"
             icon={<ShoppingCart size={18} />}
             label="Orders"
-            pathname={pathname}
-          />
-
-          <NavItem
-            href="/dashboard/categories"
-            icon={<Grid size={18} />}
-            label="Categories"
             pathname={pathname}
           />
 
