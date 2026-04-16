@@ -23,7 +23,7 @@ export default function Home() {
           className="flex flex-col justify-center items-center text-center px-8 py-20 hover:bg-white/5 transition"
         >
           <h2 className="text-4xl md:text-5xl font-bold">
-            Find Stock to Resell
+            Find Stock to <span className="text-green-400">Resell</span>
           </h2>
 
           <p className="text-gray-400 mt-4 max-w-md">
@@ -49,7 +49,9 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="flex flex-col justify-center items-center text-center px-8 py-20 bg-white/5 backdrop-blur-md hover:bg-white/10 transition"
         >
-          <h2 className="text-4xl md:text-5xl font-bold">Sell Your Stock</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">
+            <span className="text-green-400">Sell</span> Your Stock
+          </h2>
 
           <p className="text-gray-400 mt-4 max-w-md">
             List your products, get buyers, and grow your business with monthly
