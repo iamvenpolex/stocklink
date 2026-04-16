@@ -31,8 +31,8 @@ export default function Features() {
     <section className="relative py-20 px-6 bg-black text-white">
       {/* Glow background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-[400px] h-[400px] bg-green-500/20 blur-[140px] rounded-full top-[-100px] left-[-100px]" />
-        <div className="absolute w-[400px] h-[400px] bg-blue-500/20 blur-[140px] rounded-full bottom-[-100px] right-[-100px]" />
+        <div className="absolute w-100 h-100 bg-green-500/20 blur-[140px] rounded-full -top-25 -left-25" />
+        <div className="absolute w-100 h-100 bg-blue-500/20 blur-[140px] rounded-full -bottom-25 -right-25" />
       </div>
 
       <div className="relative max-w-6xl mx-auto text-center">
