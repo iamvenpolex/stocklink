@@ -8,22 +8,62 @@ const faqs = [
   {
     question: "What is StockLINK?",
     answer:
-      "StockLINK is a B2B marketplace that connects suppliers and resellers to buy and sell products easily.",
+      "StockLINK is a B2B marketplace that connects suppliers and resellers. You can browse products, contact sellers, and grow your business easily.",
+  },
+  {
+    question: "Do I need to pay to use StockLINK?",
+    answer:
+      "No. You can browse and use the platform for free. Sellers only pay when they choose to promote their products for more visibility.",
   },
   {
     question: "How do I become a seller?",
     answer:
-      "Click on Get Started, create a seller account, and access your dashboard to list your products.",
+      "Click on Get Started, create a seller account, and access your dashboard to upload and manage your products.",
   },
   {
-    question: "Is there a subscription fee?",
+    question: "How do buyers contact sellers?",
     answer:
-      "Yes, sellers can choose from monthly subscription plans depending on their business needs.",
+      "Buyers can view product details and directly contact sellers using the contact options provided on each listing.",
   },
   {
-    question: "How do payments work?",
+    question: "How does product promotion work?",
     answer:
-      "Payments are securely processed and released after successful transactions between buyers and sellers.",
+      "Sellers can promote their products for a selected number of days. Promoted products appear higher in the marketplace, increasing visibility and sales chances.",
+  },
+  {
+    question: "Are the suppliers verified?",
+    answer:
+      "We encourage transparency and trust. While suppliers manage their own listings, buyers can review profiles, ratings, and product history before making decisions.",
+  },
+  {
+    question: "Can I sell any type of product?",
+    answer:
+      "You can sell a wide range of products including clothing, electronics, food items, and more — as long as they comply with marketplace guidelines.",
+  },
+  {
+    question: "How do I get more customers?",
+    answer:
+      "You can boost your visibility by promoting your products, uploading clear images, adding detailed descriptions, and maintaining good customer reviews.",
+  },
+  {
+    question: "Is StockLINK available 24/7?",
+    answer:
+      "Yes. You can access the marketplace anytime, browse products, and manage your business whenever you want.",
+  },
+  {
+    question: "What happens if my product is out of stock?",
+    answer:
+      "If your stock reaches 0, your product will be marked as 'Sold Out'. To keep it visible, ensure your stock quantity is updated.",
+  },
+  {
+    question: "Can I edit my product after posting?",
+    answer:
+      "Yes. You can update product details, prices, images, and stock anytime from your seller dashboard.",
+  },
+  {
+    question: "How do I build trust as a seller?",
+    answer:
+      "Use clear product images, accurate descriptions, fast response times, and maintain good reviews from buyers.",
   },
 ];
 
@@ -57,7 +97,7 @@ export default function FAQ() {
           {faqs.map((item, index) => (
             <div
               key={index}
-              className="border border-gray-800 rounded-xl overflow-hidden bg-white/5"
+              className="border border-gray-800 rounded-xl overflow-hidden bg-white/5 hover:border-green-500 transition"
             >
               {/* Question */}
               <button
@@ -68,7 +108,7 @@ export default function FAQ() {
 
                 <ChevronDown
                   className={`transition-transform ${
-                    openIndex === index ? "rotate-180" : ""
+                    openIndex === index ? "rotate-180 text-green-400" : ""
                   }`}
                   size={18}
                 />
