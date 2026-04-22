@@ -25,7 +25,7 @@ const categories = [
 export default function Filters({ category, setCategory }: Props) {
   const [showAll, setShowAll] = useState(false);
 
-  const visibleCategories = showAll ? categories : categories.slice(0, 8);
+  const visibleCategories = showAll ? categories : categories.slice(0, 4);
 
   return (
     <div>

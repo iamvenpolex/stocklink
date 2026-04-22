@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "@/components/marketplace/Hero";
 import Filters from "@/components/marketplace/Filters";
 import ProductCard from "@/components/marketplace/ProductCard";
+import ProductSkeleton from "@/components/marketplace/ProductSkeleton";
 
 export default function MarketplacePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [loading, setLoading] = useState(true);
 
   const products = [
     {
@@ -27,6 +29,15 @@ export default function MarketplacePage() {
     },
   ];
 
+  // simulate loading (replace with real API later)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const filtered = products.filter((p) => {
     return (
       (category === "All" || p.category === category) &&
@@ -43,19 +54,20 @@ export default function MarketplacePage() {
         placeholder="Search products..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-4 py-3 bg-white/5 border border-gray-800 rounded-lg"
+        className="w-full px-4 py-3 bg-white/5 border border-gray-800 rounded-lg outline-none"
       />
 
       <Filters category={category} setCategory={setCategory} />
 
       {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {filtered.map((p) => (
-          <ProductCard key={p.id} product={p} />
-        ))}
+        {loading
+          ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
+          : filtered.map((p) => <ProductCard key={p.id} product={p} />)}
       </div>
 
-      {filtered.length === 0 && (
+      {/* EMPTY STATE */}
+      {!loading && filtered.length === 0 && (
         <p className="text-center text-gray-400 py-20">No products found</p>
       )}
     </main>
