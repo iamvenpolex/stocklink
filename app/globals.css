@@ -27,3 +27,29 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-\[shimmer_1\.3s_infinite\] {
+  animation: shimmer 1.3s infinite;
+}
+
+/* smooth fade for products */
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

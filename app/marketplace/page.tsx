@@ -16,7 +16,7 @@ export default function MarketplacePage() {
       id: "1",
       name: "Ankara Gown",
       price: 350,
-      category: "Clothing",
+      category: "Clothing & Fashion",
       image: "https://picsum.photos/400",
       isPromoted: true,
     },
@@ -24,17 +24,21 @@ export default function MarketplacePage() {
       id: "2",
       name: "Sneakers",
       price: 500,
-      category: "Shoes",
+      category: "Footwear",
       image: "https://picsum.photos/401",
+    },
+    {
+      id: "3",
+      name: "Smart Watch",
+      price: 1200,
+      category: "Electronics",
+      image: "https://picsum.photos/402",
+      isPromoted: true,
     },
   ];
 
-  // simulate loading (replace with real API later)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200);
-
+    const timer = setTimeout(() => setLoading(false), 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -46,7 +50,7 @@ export default function MarketplacePage() {
   });
 
   return (
-    <main className="min-h-screen bg-black text-white p-3 space-y-6">
+    <main className="px-3 pb-10 space-y-6">
       <Hero />
 
       {/* SEARCH */}
@@ -54,21 +58,21 @@ export default function MarketplacePage() {
         placeholder="Search products..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-4 py-3 bg-white/5 border border-gray-800 rounded-lg outline-none"
+        className="w-full px-4 py-3 bg-white/5 border border-gray-800 rounded-xl"
       />
 
+      {/* FILTERS */}
       <Filters category={category} setCategory={setCategory} />
 
-      {/* GRID */}
+      {/* PRODUCTS */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {loading
-          ? Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
+          ? Array.from({ length: 6 }).map((_, i) => <ProductSkeleton key={i} />)
           : filtered.map((p) => <ProductCard key={p.id} product={p} />)}
       </div>
 
-      {/* EMPTY STATE */}
       {!loading && filtered.length === 0 && (
-        <p className="text-center text-gray-400 py-20">No products found</p>
+        <p className="text-center text-gray-400 py-10">No products found</p>
       )}
     </main>
   );

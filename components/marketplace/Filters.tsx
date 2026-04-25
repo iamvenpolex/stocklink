@@ -7,64 +7,95 @@ type Props = {
   setCategory: (val: string) => void;
 };
 
-const categories = [
-  { name: "All", emoji: "🌍", example: "All products" },
-  { name: "Clothing", emoji: "👗", example: "e.g. Dresses" },
-  { name: "Clothing Bales", emoji: "📦", example: "Bulk clothes" },
-  { name: "Shoes", emoji: "👟", example: "e.g. Sneakers" },
-  { name: "Bags", emoji: "👜", example: "e.g. Handbags" },
-  { name: "Bedding", emoji: "🛏️", example: "e.g. Bedsheets" },
-  { name: "Beauty", emoji: "💄", example: "e.g. Wigs" },
-  { name: "Baby", emoji: "🧸", example: "e.g. Toys" },
-  { name: "Food", emoji: "🛒", example: "e.g. Snacks" },
-  { name: "Household", emoji: "🧹", example: "e.g. Buckets" },
-  { name: "Electronics", emoji: "📱", example: "e.g. Phones" },
-  { name: "Fabric", emoji: "🧵", example: "e.g. Ankara" },
+const categoryRows = [
+  [
+    { name: "Clothing", emoji: "👗" },
+    { name: "Beauty", emoji: "💄" },
+    { name: "Accessories", emoji: "📱" },
+    { name: "Food", emoji: "🛒" },
+  ],
+  [
+    { name: "Home", emoji: "🏠" },
+    { name: "Shoes", emoji: "👟" },
+    { name: "Baby", emoji: "🧸" },
+    { name: "Electronics", emoji: "📺" },
+  ],
+  [
+    { name: "Cleaning", emoji: "🧼" },
+    { name: "Hardware", emoji: "🔧" },
+    { name: "Cars", emoji: "🚗" },
+    { name: "Fabric", emoji: "🧵" },
+  ],
 ];
 
 export default function Filters({ category, setCategory }: Props) {
-  const [showAll, setShowAll] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
-  const visibleCategories = showAll ? categories : categories.slice(0, 4);
+  const isAll = category === "All";
+
+  const visibleRows = showMore ? categoryRows : categoryRows.slice(0, 1); // 👈 ONLY FIRST ROW
 
   return (
-    <div>
+    <div className="space-y-3">
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold">Browse Categories</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-semibold text-white">Categories</h2>
 
         <button
-          onClick={() => setShowAll(!showAll)}
-          className="text-sm text-green-400 hover:underline"
+          onClick={() => setShowMore(!showMore)}
+          className="text-xs text-green-400"
         >
-          {showAll ? "Show less" : "Show more"}
+          {showMore ? "Show less" : "Show more"}
         </button>
       </div>
 
-      {/* ACTIVE CATEGORY */}
-      <p className="text-sm text-gray-400 mb-3">
-        Showing: <span className="text-green-400">{category}</span>
-      </p>
+      {/* ALL BUTTON */}
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+        <button
+          onClick={() => setCategory("All")}
+          className={`
+            px-4 py-2 rounded-full text-xs border whitespace-nowrap shrink-0
+            transition
+            ${
+              isAll
+                ? "bg-green-500 text-white border-green-500"
+                : "bg-white/5 text-gray-300 border-gray-800"
+            }
+          `}
+        >
+          🌍 All
+        </button>
+      </div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
-        {visibleCategories.map((c) => (
-          <button
-            key={c.name}
-            onClick={() => setCategory(c.name)}
-            className={`
-              p-3 rounded-xl border text-xs flex flex-col items-center text-center transition
-              ${
-                category === c.name
-                  ? "bg-green-500 text-white border-green-500"
-                  : "bg-white/5 border-gray-800 hover:border-green-500"
-              }
-            `}
-          >
-            <span className="text-lg">{c.emoji}</span>
-            <span className="mt-1 font-medium">{c.name}</span>
-            <span className="text-[10px] text-gray-400">{c.example}</span>
-          </button>
+      {/* FIRST ROW + OPTIONAL MORE ROWS */}
+      <div className="space-y-2">
+        {visibleRows.map((row, i) => (
+          <div key={i} className="flex gap-2 overflow-x-auto scrollbar-hide">
+            {row.map((c) => {
+              const active = category === c.name;
+
+              return (
+                <button
+                  key={c.name}
+                  onClick={() => setCategory(c.name)}
+                  className={`
+                    flex items-center gap-2
+                    px-3 py-2 rounded-full
+                    border text-xs whitespace-nowrap
+                    transition shrink-0
+                    ${
+                      active
+                        ? "bg-green-500 text-white border-green-500"
+                        : "bg-white/5 text-gray-300 border-gray-800"
+                    }
+                  `}
+                >
+                  <span>{c.emoji}</span>
+                  {c.name}
+                </button>
+              );
+            })}
+          </div>
         ))}
       </div>
     </div>

@@ -26,7 +26,7 @@ export default function Home() {
           className="relative flex flex-col justify-center items-center text-center px-8 py-20 hover:bg-white/5 transition"
         >
           {/* subtle SA accent line */}
-          <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-green-500 via-yellow-400 to-red-500 opacity-70" />
+          <div className="absolute top-0 left-0 w-full h-0.75 bg-linear-to-r from-green-500 via-yellow-400 to-red-500 opacity-70" />
 
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">
             Find Stock to <span className="text-green-400">Resell</span>
@@ -39,13 +39,11 @@ export default function Home() {
 
           <motion.a whileHover={{ scale: 1.05 }} href="/marketplace">
             <button className="mt-8 px-10 py-3 bg-green-500 hover:bg-green-600 rounded-xl font-semibold shadow-lg shadow-green-500/20">
-              Browse Products 🇿🇦
+              Browse Products
             </button>
           </motion.a>
 
-          <p className="text-xs text-gray-500 mt-3">
-            Instant access • WhatsApp suppliers directly
-          </p>
+          <p className="text-xs text-gray-500 mt-3">Instant access</p>
         </motion.div>
 
         {/* SUPPLIERS */}
@@ -56,7 +54,7 @@ export default function Home() {
           className="relative flex flex-col justify-center items-center text-center px-8 py-20 bg-white/5 backdrop-blur-md hover:bg-white/10 transition"
         >
           {/* subtle SA accent line */}
-          <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-green-500 via-blue-500 to-yellow-400 opacity-70" />
+          <div className="absolute top-0 left-0 w-full h-0.75 bg-linear-to-r from-green-500 via-blue-500 to-yellow-400 opacity-70" />
 
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">
             <span className="text-green-400">Sell</span> Your Stock
@@ -74,17 +72,9 @@ export default function Home() {
           </motion.a>
 
           <p className="text-xs text-gray-500 mt-3">
-            Sell nationwide • Get paid in Rands (ZAR)
+            Sell across South Africa • Get paid in Rands (ZAR)
           </p>
         </motion.div>
-      </section>
-
-      {/* TRUST BAR (NEW - VERY IMPORTANT) */}
-      <section className="px-6 py-8 border-t border-gray-800 text-center">
-        <p className="text-sm text-gray-400">
-          Built for resellers in 🇿🇦 South Africa • Clothing • Beauty •
-          Electronics • Wholesale stock
-        </p>
       </section>
 
       {/* FEATURES */}
