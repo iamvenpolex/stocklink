@@ -9,22 +9,22 @@ type Props = {
 
 const categoryRows = [
   [
-    { name: "Clothing", emoji: "👗" },
-    { name: "Beauty", emoji: "💄" },
-    { name: "Accessories", emoji: "📱" },
-    { name: "Food", emoji: "🛒" },
+    { name: "Clothing & Fashion", emoji: "👗" },
+    { name: "Beauty & Hair", emoji: "💄" },
+    { name: "Cellphone Accessories", emoji: "📱" },
+    { name: "Bulk Foods", emoji: "🛒" },
   ],
   [
-    { name: "Home", emoji: "🏠" },
-    { name: "Shoes", emoji: "👟" },
-    { name: "Baby", emoji: "🧸" },
+    { name: "Home & Kitchen", emoji: "🏠" },
+    { name: "Footwear", emoji: "👟" },
+    { name: "Baby Products", emoji: "🧸" },
     { name: "Electronics", emoji: "📺" },
   ],
   [
-    { name: "Cleaning", emoji: "🧼" },
-    { name: "Hardware", emoji: "🔧" },
-    { name: "Cars", emoji: "🚗" },
-    { name: "Fabric", emoji: "🧵" },
+    { name: "Cleaning Products", emoji: "🧼" },
+    { name: "Hardware & DIY", emoji: "🔧" },
+    { name: "Car Accessories", emoji: "🚗" },
+    { name: "Fabric & Tesxtiles", emoji: "🧵" },
   ],
 ];
 
