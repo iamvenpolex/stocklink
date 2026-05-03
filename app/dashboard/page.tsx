@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/dashboard/Navbar";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -10,47 +10,43 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import FloatingAddButton from "@/components/dashboard/FloatingAddButton";
 
-type Seller = {
-  id: string;
-  name: string;
-  email: string;
-  business: string;
-  phone: string;
-};
-
 export default function Dashboard() {
   const router = useRouter();
+  const hasFetched = useRef(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<Seller | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // Guard: only run once on the client
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     const token = localStorage.getItem("stocklink-token");
 
-    // No token → kick to auth page
     if (!token) {
       router.push("/auth");
       return;
     }
 
-    // Verify token with backend and load user profile
-    fetch("http://localhost:5000/api/auth/me", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
         if (!res.ok) throw new Error("Unauthorised");
         return res.json();
       })
-      .then((data) => {
-        setUser(data.user);
+      .then(() => {
+        setReady(true);
         setLoading(false);
       })
       .catch(() => {
-        // Token expired or invalid → clear and redirect
         localStorage.removeItem("stocklink-token");
         router.push("/auth");
       });
   }, [router]);
+
+  if (!ready && loading) return null;
 
   return (
     <main className="min-h-screen bg-black text-white">
