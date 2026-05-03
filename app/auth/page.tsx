@@ -186,8 +186,8 @@ export default function AuthPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-black text-white px-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-[500px] h-[500px] bg-green-500/20 blur-[160px] rounded-full -top-40 -left-40" />
-        <div className="absolute w-[500px] h-[500px] bg-blue-500/20 blur-[160px] rounded-full -bottom-40 -right-40" />
+        <div className="absolute w-125 h-125 bg-green-500/20 blur-[160px] rounded-full -top-40 -left-40" />
+        <div className="absolute w-125 h-125 bg-blue-500/20 blur-[160px] rounded-full -bottom-40 -right-40" />
       </div>
 
       <motion.div

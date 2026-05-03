@@ -62,7 +62,7 @@ export default function Dashboard() {
           <DashboardSkeleton />
         ) : (
           <>
-            <DashboardHeader user={user} />
+            <DashboardHeader />
             <StatsCards />
             <ProductTable />
           </>
