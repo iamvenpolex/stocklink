@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Menu, ArrowLeft } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -11,10 +11,28 @@ type NavbarProps = {
 export default function Navbar({ setOpen }: NavbarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const [initials, setInitials] = useState("SL");
+
+  useEffect(() => {
+    const token = localStorage.getItem("stocklink-token");
+    if (!token) return;
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const name: string = data.user?.name || data.user?.business || "";
+        const parts = name.trim().split(" ");
+        const computed =
+          parts.length >= 2 ? parts[0][0] + parts[1][0] : name.slice(0, 2);
+        setInitials(computed.toUpperCase());
+      })
+      .catch(() => null);
+  }, []);
 
   const showBack = pathname !== "/dashboard";
 
-  // 🔥 PAGE TITLE MAP
   const getTitle = () => {
     switch (pathname) {
       case "/dashboard":
@@ -39,8 +57,6 @@ export default function Navbar({ setOpen }: NavbarProps) {
         return "Dashboard";
     }
   };
-
-  const title = getTitle();
 
   return (
     <header className="fixed top-0 left-0 w-full z-40 flex items-center justify-between px-4 py-4 border-b border-gray-800 bg-black text-white">
@@ -68,18 +84,12 @@ export default function Navbar({ setOpen }: NavbarProps) {
           <Menu size={18} />
         </button>
 
-        {/* 🔥 PAGE TITLE */}
-        <h1 className="text-lg font-bold">{title}</h1>
+        <h1 className="text-lg font-bold">{getTitle()}</h1>
       </div>
 
-      {/* RIGHT */}
-      <div className="relative w-9 h-9">
-        <Image
-          src="https://i.pravatar.cc/40"
-          alt="User profile"
-          fill
-          className="rounded-full border border-gray-700 object-cover"
-        />
+      {/* RIGHT — initials avatar */}
+      <div className="w-9 h-9 rounded-full border border-gray-700 bg-green-500/20 flex items-center justify-center">
+        <span className="text-xs font-bold text-green-400">{initials}</span>
       </div>
     </header>
   );

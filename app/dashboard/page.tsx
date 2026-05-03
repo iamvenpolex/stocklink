@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/dashboard/Navbar";
 import Sidebar from "@/components/dashboard/Sidebar";
 import StatsCards from "@/components/dashboard/StatsCards";
@@ -9,18 +10,50 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
 import FloatingAddButton from "@/components/dashboard/FloatingAddButton";
 
+type Seller = {
+  id: string;
+  name: string;
+  email: string;
+  business: string;
+  phone: string;
+};
+
 export default function Dashboard() {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<Seller | null>(null);
 
-  // simulate loading (replace with API later)
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+    const token = localStorage.getItem("stocklink-token");
+
+    // No token → kick to auth page
+    if (!token) {
+      router.push("/auth");
+      return;
+    }
+
+    // Verify token with backend and load user profile
+    fetch("http://localhost:5000/api/auth/me", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorised");
+        return res.json();
+      })
+      .then((data) => {
+        setUser(data.user);
+        setLoading(false);
+      })
+      .catch(() => {
+        // Token expired or invalid → clear and redirect
+        localStorage.removeItem("stocklink-token");
+        router.push("/auth");
+      });
+  }, [router]);
 
   return (
-    <main className=" min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white">
       <Navbar setOpen={setSidebarOpen} />
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
@@ -29,14 +62,13 @@ export default function Dashboard() {
           <DashboardSkeleton />
         ) : (
           <>
-            <DashboardHeader />
+            <DashboardHeader user={user} />
             <StatsCards />
             <ProductTable />
           </>
         )}
       </div>
 
-      {/* Floating Add Product */}
       <FloatingAddButton />
     </main>
   );
