@@ -22,7 +22,7 @@ const categoryRows = [
     { name: "Cleaning Products", emoji: "🧼" },
     { name: "Hardware & DIY", emoji: "🔧" },
     { name: "Car Accessories", emoji: "🚗" },
-    { name: "Fabric & Tesxtiles", emoji: "🧵" },
+    { name: "Fabric & Textiles", emoji: "🧵" },
   ],
 ];
 
