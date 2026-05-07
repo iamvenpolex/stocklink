@@ -33,7 +33,9 @@ export default function MarketplacePage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch("http://localhost:5000/api/products/all");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/products/all`,
+        );
         const data = await res.json();
         if (!res.ok)
           throw new Error(data.message || "Failed to load products.");
