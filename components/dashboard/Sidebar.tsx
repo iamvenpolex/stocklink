@@ -115,7 +115,7 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
             label="Products"
             pathname={pathname}
           />
-          <NavItem
+          {/*<NavItem
             href="/dashboard/orders"
             icon={<ShoppingCart size={18} />}
             label="Orders"
@@ -132,19 +132,19 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
             icon={<TrendingUp size={18} />}
             label="Revenue"
             pathname={pathname}
-          />
+          />*/}
           <NavItem
             href="/dashboard/promote"
             icon={<Megaphone size={18} />}
             label="Promote"
             pathname={pathname}
           />
-          <NavItem
+          {/*<NavItem
             href="/dashboard/reviews"
             icon={<Star size={18} />}
             label="Reviews"
             pathname={pathname}
-          />
+          />*/}
           <NavItem
             href="/dashboard/notifications"
             icon={<Bell size={18} />}
@@ -157,12 +157,12 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
             label="Settings"
             pathname={pathname}
           />
-          <NavItem
+          {/*<NavItem
             href="/dashboard/billing"
             icon={<CreditCard size={18} />}
             label="Billing"
             pathname={pathname}
-          />
+          />*/}
         </nav>
 
         {/* Logout */}

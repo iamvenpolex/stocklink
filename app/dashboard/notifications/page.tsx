@@ -1,101 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Bell,
-  ShoppingCart,
-  Star,
-  Megaphone,
-  Package,
-  CheckCheck,
-  Trash2,
-} from "lucide-react";
-
-type NotificationType = "order" | "review" | "promotion" | "stock" | "general";
+import { useEffect, useState } from "react";
+import { Bell, CheckCheck, Trash2, Loader2 } from "lucide-react";
 
 type Notification = {
   id: string;
-  type: NotificationType;
   title: string;
   message: string;
-  time: string;
+  sent_at: string;
   read: boolean;
 };
 
-const iconMap: Record<NotificationType, React.ReactNode> = {
-  order: <ShoppingCart size={16} className="text-blue-400" />,
-  review: <Star size={16} className="text-yellow-400" />,
-  promotion: <Megaphone size={16} className="text-purple-400" />,
-  stock: <Package size={16} className="text-red-400" />,
-  general: <Bell size={16} className="text-gray-400" />,
-};
-
-const bgMap: Record<NotificationType, string> = {
-  order: "bg-blue-500/10 border-blue-500/20",
-  review: "bg-yellow-500/10 border-yellow-500/20",
-  promotion: "bg-purple-500/10 border-purple-500/20",
-  stock: "bg-red-500/10 border-red-500/20",
-  general: "bg-white/5 border-gray-800",
-};
-
-const dotMap: Record<NotificationType, string> = {
-  order: "bg-blue-400",
-  review: "bg-yellow-400",
-  promotion: "bg-purple-400",
-  stock: "bg-red-400",
-  general: "bg-gray-400",
-};
-
-const iconBgMap: Record<NotificationType, string> = {
-  order: "bg-blue-500/15 border-blue-500/20",
-  review: "bg-yellow-500/15 border-yellow-500/20",
-  promotion: "bg-purple-500/15 border-purple-500/20",
-  stock: "bg-red-500/15 border-red-500/20",
-  general: "bg-white/10 border-gray-700",
-};
-
-const INITIAL: Notification[] = [
-  {
-    id: "1",
-    type: "order",
-    title: "New Order Received",
-    message:
-      "You received a new order (ORD-001). A buyer is interested in your Ankara Gown.",
-    time: "2 mins ago",
-    read: false,
-  },
-  {
-    id: "2",
-    type: "review",
-    title: "New 5★ Review",
-    message:
-      "Someone left a 5-star review on your Sneakers listing. Keep it up!",
-    time: "1 hour ago",
-    read: false,
-  },
-  {
-    id: "3",
-    type: "promotion",
-    title: "Promotion Expired",
-    message:
-      "Your sponsored listing for Smart Watch has expired. Renew to stay at the top.",
-    time: "Yesterday",
-    read: true,
-  },
-  {
-    id: "4",
-    type: "stock",
-    title: "Low Stock Alert",
-    message:
-      "Your Leather Bag only has 2 units left. Consider restocking soon.",
-    time: "2 days ago",
-    read: true,
-  },
-];
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(mins / 60);
+  const days = Math.floor(hours / 24);
+  if (mins < 1) return "Just now";
+  if (mins < 60) return `${mins} min${mins > 1 ? "s" : ""} ago`;
+  if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  if (days === 1) return "Yesterday";
+  return `${days} days ago`;
+}
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState<Notification[]>(INITIAL);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "unread">("all");
+
+  useEffect(() => {
+    const token = localStorage.getItem("stocklink-token");
+    if (!token) return;
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/notifications`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.notifications) {
+          // Mark all as unread initially — read state is local
+          setNotifications(
+            data.notifications.map((n: Omit<Notification, "read">) => ({
+              ...n,
+              read: false,
+            })),
+          );
+        }
+      })
+      .catch(() => setError("Failed to load notifications."))
+      .finally(() => setLoading(false));
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -164,69 +119,93 @@ export default function NotificationsPage() {
         ))}
       </div>
 
-      {/* ── List ──────────────────────────────────────────────────────────── */}
-      <div className="space-y-3">
-        {filtered.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-600">
-            <Bell size={36} />
-            <p className="text-sm">
-              {filter === "unread"
-                ? "No unread notifications"
-                : "No notifications yet"}
-            </p>
-          </div>
-        )}
+      {/* ── Loading ───────────────────────────────────────────────────────── */}
+      {loading && (
+        <div className="flex items-center justify-center py-20 gap-2 text-gray-500">
+          <Loader2 size={20} className="animate-spin" />
+          <span className="text-sm">Loading notifications...</span>
+        </div>
+      )}
 
-        {filtered.map((n) => (
-          <div
-            key={n.id}
-            onClick={() => markAsRead(n.id)}
-            className={`group relative flex items-start gap-4 p-4 rounded-2xl border cursor-pointer transition-all duration-200 ${
-              n.read ? "bg-white/5 border-gray-800" : bgMap[n.type]
-            }`}
-          >
-            {/* Icon */}
+      {/* ── Error ─────────────────────────────────────────────────────────── */}
+      {error && (
+        <p className="text-center text-red-400 text-sm py-8">{error}</p>
+      )}
+
+      {/* ── List ──────────────────────────────────────────────────────────── */}
+      {!loading && !error && (
+        <div className="space-y-3">
+          {filtered.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-600">
+              <Bell size={36} />
+              <p className="text-sm">
+                {filter === "unread"
+                  ? "No unread notifications"
+                  : "No notifications yet"}
+              </p>
+            </div>
+          )}
+
+          {filtered.map((n) => (
             <div
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 mt-0.5 ${
-                n.read ? "bg-white/5 border-gray-700" : iconBgMap[n.type]
+              key={n.id}
+              onClick={() => markAsRead(n.id)}
+              className={`group relative flex items-start gap-4 p-4 rounded-2xl border cursor-pointer transition-all duration-200 ${
+                n.read
+                  ? "bg-white/5 border-gray-800"
+                  : "bg-green-500/10 border-green-500/20"
               }`}
             >
-              {iconMap[n.type]}
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 min-w-0 pr-6">
-              <div className="flex items-center justify-between gap-2">
-                <h3
-                  className={`text-sm font-semibold ${n.read ? "text-gray-300" : "text-white"}`}
-                >
-                  {n.title}
-                </h3>
-                {!n.read && (
-                  <span
-                    className={`w-2 h-2 rounded-full shrink-0 ${dotMap[n.type]}`}
-                  />
-                )}
+              {/* Icon */}
+              <div
+                className={`w-9 h-9 rounded-xl border flex items-center justify-center shrink-0 mt-0.5 ${
+                  n.read
+                    ? "bg-white/5 border-gray-700"
+                    : "bg-green-500/15 border-green-500/20"
+                }`}
+              >
+                <Bell
+                  size={16}
+                  className={n.read ? "text-gray-400" : "text-green-400"}
+                />
               </div>
-              <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-                {n.message}
-              </p>
-              <p className="text-xs text-gray-600 mt-2">{n.time}</p>
-            </div>
 
-            {/* Dismiss */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                dismiss(n.id);
-              }}
-              className="opacity-0 group-hover:opacity-100 absolute top-3 right-3 p-1.5 rounded-lg text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all"
-            >
-              <Trash2 size={13} />
-            </button>
-          </div>
-        ))}
-      </div>
+              {/* Content */}
+              <div className="flex-1 min-w-0 pr-6">
+                <div className="flex items-center justify-between gap-2">
+                  <h3
+                    className={`text-sm font-semibold ${
+                      n.read ? "text-gray-300" : "text-white"
+                    }`}
+                  >
+                    {n.title}
+                  </h3>
+                  {!n.read && (
+                    <span className="w-2 h-2 rounded-full shrink-0 bg-green-400" />
+                  )}
+                </div>
+                <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+                  {n.message}
+                </p>
+                <p className="text-xs text-gray-600 mt-2">
+                  {timeAgo(n.sent_at)}
+                </p>
+              </div>
+
+              {/* Dismiss */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dismiss(n.id);
+                }}
+                className="opacity-0 group-hover:opacity-100 absolute top-3 right-3 p-1.5 rounded-lg text-gray-600 hover:text-red-400 hover:bg-red-500/10 transition-all"
+              >
+                <Trash2 size={13} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
