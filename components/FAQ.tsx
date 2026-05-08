@@ -78,8 +78,8 @@ export default function FAQ() {
     <section className="relative py-20 px-6 bg-black text-white">
       {/* Background glow */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-[400px] h-[400px] bg-green-500/20 blur-[140px] rounded-full top-[-120px] left-[-120px]" />
-        <div className="absolute w-[400px] h-[400px] bg-blue-500/20 blur-[140px] rounded-full bottom-[-120px] right-[-120px]" />
+        <div className="absolute w-100 h-100 bg-green-500/20 blur-[140px] rounded-full -top-30 -left-30" />
+        <div className="absolute w-100 h-100 bg-blue-500/20 blur-[140px] rounded-full -bottom-30 -right-30" />
       </div>
 
       <div className="relative max-w-4xl mx-auto">

@@ -31,8 +31,8 @@ export default function Features() {
     <section className="relative py-24 px-6 bg-black text-white overflow-hidden">
       {/* 🌌 Background Glow */}
       <div className="absolute inset-0">
-        <div className="absolute w-[500px] h-[500px] bg-green-500/20 blur-[140px] rounded-full -top-32 -left-32" />
-        <div className="absolute w-[500px] h-[500px] bg-blue-500/20 blur-[140px] rounded-full -bottom-32 -right-32" />
+        <div className="absolute w-125 h-125 bg-green-500/20 blur-[140px] rounded-full -top-32 -left-32" />
+        <div className="absolute w-125 h-125 bg-blue-500/20 blur-[140px] rounded-full -bottom-32 -right-32" />
       </div>
 
       <div className="relative max-w-6xl mx-auto text-center">
@@ -44,7 +44,7 @@ export default function Features() {
           className="text-3xl md:text-5xl font-bold leading-tight"
         >
           Powerful{" "}
-          <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
             Features
           </span>
         </motion.h2>
@@ -67,7 +67,7 @@ export default function Features() {
               className="group relative bg-white/5 border border-gray-800 rounded-2xl p-6 text-left backdrop-blur-md hover:border-green-500 transition-all duration-300"
             >
               {/* Glow on hover */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-br from-green-500/10 to-transparent" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-green-500/10 to-transparent" />
 
               {/* ICON */}
               <div className="relative z-10 mb-4 inline-flex p-3 rounded-xl bg-green-500/10 border border-green-500/20">

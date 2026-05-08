@@ -53,7 +53,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   return (
     <h3
       ref={ref}
-      className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
+      className="text-3xl md:text-4xl font-bold bg-linear-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
     >
       {formatNumber(count)}
       {suffix}
@@ -66,8 +66,8 @@ export default function Stats() {
     <section className="relative py-20 px-6 bg-black text-white overflow-hidden">
       {/* Background Glow */}
       <div className="absolute inset-0">
-        <div className="absolute w-[400px] h-[400px] bg-green-500/10 blur-[120px] rounded-full -top-20 -left-20" />
-        <div className="absolute w-[400px] h-[400px] bg-blue-500/10 blur-[120px] rounded-full -bottom-20 -right-20" />
+        <div className="absolute w-100 h-100 bg-green-500/10 blur-[120px] rounded-full -top-20 -left-20" />
+        <div className="absolute w-100 h-100 bg-blue-500/10 blur-[120px] rounded-full -bottom-20 -right-20" />
       </div>
 
       <div className="relative max-w-5xl mx-auto">
@@ -95,7 +95,7 @@ export default function Stats() {
               className="group relative bg-white/5 border border-gray-800 rounded-2xl p-6 backdrop-blur-md transition-all duration-300 hover:border-green-500"
             >
               {/* Hover Glow */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-green-500/10 to-transparent" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition bg-linear-to-br from-green-500/10 to-transparent" />
 
               <div className="relative z-10">
                 <Counter value={item.value} suffix={item.suffix} />
